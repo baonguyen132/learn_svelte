@@ -2,6 +2,14 @@
 	import { SectionHeline, Button , ExperienceTable } from '$components';
 	import image from '$assets/about-me.jpeg';
 	import { goto } from '$app/navigation';
+	import type { DevExperience } from '$lib/types/sanity.js';
+
+
+    interface AboutMeProps {
+        workExperiences: DevExperience[];
+    }
+
+    let {workExperiences} : AboutMeProps = $props() ;
 
     function handleClick() {
         goto('/#form-contact')
@@ -12,7 +20,7 @@
 	<SectionHeline title="About Me" id="about-me" />
 	<div class="mt-m content-container default-margin">
         <div class="image">
-            <img src="{image}" alt="About Me Image" />
+            <img src={image} alt="About Me Image" />
         </div>
         <div class="text">
 			<p>
@@ -34,7 +42,7 @@
             <Button handleClick={handleClick} className="mt-m">Tell me about your project</Button>
 		</div>
 	</div>
-    <ExperienceTable />
+    <ExperienceTable workExperiences={workExperiences} />
 </section>
 
 <style>
