@@ -55,5 +55,8 @@
 	},
 	"keywords": [
 		"svelte"
-	]
+	],
+	"dependencies": {
+		"sanity": "^4.16.0"
+	}
 }
