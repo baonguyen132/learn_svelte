@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ProcessProject, Item } from "$lib/types/sanity.js";
+	import type { ProcessProject } from "$lib/types/sanity.js";
 
     interface ItemProjectProps {
         project: ProcessProject;
