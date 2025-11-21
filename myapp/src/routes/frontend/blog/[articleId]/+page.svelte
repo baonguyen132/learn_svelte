@@ -1,6 +1,5 @@
 <script lang="ts">
     let data = $props();
-
     let {post} = data.data;
 </script>
 

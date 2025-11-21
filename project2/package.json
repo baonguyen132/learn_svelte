@@ -57,6 +57,9 @@
 		"svelte"
 	],
 	"dependencies": {
+		"@sanity/image-url": "^1.2.0",
+		"@sendgrid/mail": "^8.1.6",
+		"nodemailer": "^7.0.10",
 		"sanity": "^4.16.0"
 	}
 }
