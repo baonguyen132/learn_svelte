@@ -9,7 +9,7 @@ interface ReturnObject {
 }
 
 export const actions = {
-    default: async ({ request }) => {
+    default: async ({ request , locals: { supabase } }) => {
 
         const formData = await request.formData();
 
@@ -31,7 +31,23 @@ export const actions = {
                 message: returnObject.error
             };
         }
+
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: returnObject.email,
+            password: returnObject.password,
+        })
+        if (error) {
+            returnObject.success = false;
+            returnObject.error.push(error.message);
+            return {
+                success: false,
+                error: returnObject.error
+            };
+        }
+        console.log("ss");
         
-        redirect(303, "/private/dashboard");
+        
+
+        redirect(303, "/private");
     }
 }

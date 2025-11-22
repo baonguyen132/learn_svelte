@@ -1,4 +1,5 @@
 import { redirect} from "@sveltejs/kit"
+import { fail } from "assert";
 
 interface ReturnObject {
     success: boolean;
@@ -10,7 +11,7 @@ interface ReturnObject {
 }
 
 export const actions = {
-    default: async ({ request }) => {
+    default: async ({ request, locals: { supabase } }) => {
 
         const formData = await request.formData();
 
@@ -39,6 +40,18 @@ export const actions = {
                 message: returnObject.error
             };
         }
+
+        const {data , error} = await supabase.auth.signUp({
+            email: returnObject.email,
+            password: returnObject.password,
+        })
+
+        if(error) {
+            returnObject.success = false;
+            return fail(400, { success: false, error: [error.message] });
+        }
+
+        
 
         redirect(303, "/private/dashboard");
     }
