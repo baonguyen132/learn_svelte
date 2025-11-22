@@ -1,24 +1,47 @@
 <script lang="ts">
     import Button from '$components/Button.svelte'
+    
     interface ComponentProps {
         isRegistration: boolean;
+        form: {
+            success?: boolean;
+            message?: string[];
+            email?: string;
+            name?: string;
+            password?: string;
+            passwordConfirm?: string;
+        } | null;
     }
 
-    let {isRegistration = true} : ComponentProps = $props();
+    let {isRegistration = true , form} : ComponentProps = $props();
+    let responseMessage: string[] = [];
+    if (form && form.message) responseMessage = form.message;
 
 </script>
 
 <div class="default-margin auth-container">
     <h1 class="mb-l">{isRegistration ? 'Register' : 'Login'}</h1>
     <div class="form-and-social-login">
-        <form class="auth-form">
-            {#if isRegistration}
-                <input type="text" placeholder="Name" name="name" />
+
+        <form class="auth-form" method="POST">
+
+            {#if form && responseMessage.length > 0}
+                {#if form.success === false}   
+                    {#each responseMessage as message}
+                        <div class="auth-error">
+                            <p>{message}</p>
+                        </div>
+                    {/each}
+                {/if}
             {/if}
-            <input type="text" placeholder="Email" name="email" />
-            <input type="text" placeholder="Password" name="password" />
+
             {#if isRegistration}
-                <input type="text" placeholder="Confirm Password" name="confirm-password" />
+                <input type="text" placeholder="Name" name="name" value={form?.name || ""} />
+            {/if}
+            <input type="text" placeholder="Email" name="email" value={form?.email || ""} />
+            <input type="password" placeholder="Password" name="password" value={form?.password || ""} />
+            {#if isRegistration}
+                <input type="password" placeholder="Confirm Password" name="confirmPassword" value={form?.passwordConfirm || ""} />
             {/if}
             <Button type="submit">{isRegistration ? 'Register' : 'Login'}</Button>
             {#if isRegistration}

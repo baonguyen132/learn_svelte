@@ -1,7 +1,22 @@
 <script>
 	import Header from '$components/Layout/Header.svelte';
+	import { invalidate } from '$app/navigation';
 
-    const {children} = $props();
+    let {children , data} = $props();
+    let {supabase , session, user} = $derived(data);
+
+    $effect(() => {
+        const {data} = supabase.auth.onAuthStateChange((_, newSession) => {
+            if(newSession?.expires_at !== session?.expires_at) {
+                invalidate('supabase:auth');
+            }
+        });
+        return () => data.subscription?.unsubscribe();
+    })
+
+    $inspect(session)
+    $inspect(user)
+
 </script>
 
 <Header />
