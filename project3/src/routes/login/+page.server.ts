@@ -1,5 +1,5 @@
 import { redirect } from "@sveltejs/kit"
-
+import { PUBLIC_FRONTEND_URL } from "$env/static/public";
 
 interface ReturnObject {
     success: boolean;
@@ -9,7 +9,7 @@ interface ReturnObject {
 }
 
 export const actions = {
-    default: async ({ request , locals: { supabase } }) => {
+    signInWithPassword: async ({ request , locals: { supabase } }) => {
 
         const formData = await request.formData();
 
@@ -48,6 +48,24 @@ export const actions = {
         
         
 
-        redirect(303, "/private");
+        redirect(303, "/private/dashboard");
+    },
+    googleLogin: async ({locals:  { supabase } }) => {
+        const {data , error} = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                redirectTo: `${PUBLIC_FRONTEND_URL}/auth/callback`
+            }
+        })
+        if (error) {
+            return {
+                success: false,
+                error: [error.message]
+            }
+        }
+
+        throw redirect(303, data.url)
+        
     }
+
 }

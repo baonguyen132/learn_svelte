@@ -23,7 +23,7 @@
     <h1 class="mb-l">{isRegistration ? 'Register' : 'Login'}</h1>
     <div class="form-and-social-login">
 
-        <form class="auth-form" method="POST">
+        <form class="auth-form" method="POST" action={isRegistration ? "" : "/login/?/signInWithPassword"}>
 
             {#if form && responseMessage.length > 0}
                 {#if form.success === false}   
@@ -51,7 +51,9 @@
             {/if}
         </form>
         <div class="social-login">
-
+            <form method="post" action={isRegistration ? "/login/?/googleLogin" : "?/googleLogin"}>
+                <Button type="submit">Continue with Google</Button>
+            </form>
         </div>
     </div>
 </div>

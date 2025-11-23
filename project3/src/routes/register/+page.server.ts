@@ -46,12 +46,24 @@ export const actions = {
             password: returnObject.password,
         })
 
+        
+
         if(error) {
             returnObject.success = false;
             return fail(400, { success: false, error: [error.message] });
         }
-
+        const userId = data.user.id;
         
+        const { error: errorData } = await supabase.from("user_name").insert([{
+            user_id: userId,
+            name: returnObject.name
+        }])
+
+        if (errorData) {
+            returnObject.success = false;
+            console.log(errorData);
+            
+        }
 
         redirect(303, "/private/dashboard");
     }
