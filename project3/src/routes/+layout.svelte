@@ -1,11 +1,12 @@
 <script>
 	import Header from '$components/Layout/Header.svelte';
 	import { invalidate } from '$app/navigation';
-	import { setUserState } from '$components/state/user-state.svelte.ts';
+	import { setUserState } from '$lib/state/user-state.svelte.ts';
     import "../app.css"
 
     let { children, data } = $props();
     let { supabase, session } = $derived(data);
+
 
     let userState = setUserState({ session: data.session, supabase: data.supabase, user: data.user });
 

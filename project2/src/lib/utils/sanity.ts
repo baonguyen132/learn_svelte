@@ -24,9 +24,7 @@ export function processProjectEntry(rawProjects: SanityProject) {
         slug: rawProjects.slug ? rawProjects.slug : 'no-slug',
         projectImageUrl,
         content:  rawProjects.content?.map(processProjectContent) ?? []
-
      }
-
      return processedProjects;
 }
 

@@ -30,7 +30,7 @@
         {@render children()}
     </a>
 {:else}
-    <button {...props} on:click={handleClick} class="btn" class:btn-secondary={isSecondary} class:btn-danger={isDanger} class:btn-menu={isMenu}>
+    <button {...props} onclick={handleClick} class="btn" class:btn-secondary={isSecondary} class:btn-danger={isDanger} class:btn-menu={isMenu}>
         {@render children()}
     </button>
 {/if}

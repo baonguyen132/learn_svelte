@@ -1,14 +1,13 @@
 <script lang="ts">
     import logo from '$assets/app-logo.svg'
 	import Button from '$components/Button.svelte';
-	import { getUserState } from '$components/state/user-state.svelte.ts';
-    
+	import { getUserState } from '$lib/state/user-state.svelte.ts'
     let userContext = getUserState();
-    let { session , user } = $derived(userContext);
+    let { session , username } = $derived(userContext);
 </script>
 
 <header>
-    <a href="/">
+    <a href={session ? "/private/dashboard" : "/"}>
         <img src={logo} alt="Go to homepage" class="logo" />
     </a>
     {#if !session}
@@ -24,7 +23,7 @@
     {:else}
         <ul>
             <li>
-                {user.email}
+                {username}
             </li>
             <li>
                 <Button isMenu={true} handleClick={() => userContext.logout()} type="button">Logout</Button>
